@@ -2,7 +2,7 @@
 #include <vector>
 #include <fstream>
 
-typedef std::vector<int> iVect;
+typedef std::vector<short int> iVect;
 
 void PrintMtr(std::vector <iVect>& matrix, char nameVert, char nameHor, int n, int m) {
     std::cout << "\t";
@@ -23,7 +23,7 @@ int main()
     setlocale(LC_ALL, "");
     int n, m;
 
-    std::ifstream input("input.txt");
+    std::ifstream input("Data/input.txt");
     if (!input) {
         std::cout << "Файл не найден\n";
         return 0;
@@ -65,12 +65,19 @@ int main()
             if (newMatrix[i][j] == 1) {
                 iVect current(n, 0);
                 if (newMatrix[j][i] == 1) {
-                    current[i] = 2;
+                    if(i==j)
+                        current[i] = 2;
+                    else {
+                        current[i] = 1;
+                        current[j] = 1;
+                    }
                 }
                 else if (newMatrix[j][i] == 0) {
                     current[i] = 1;
                     current[j] = -1;
                 }
+                newMatrix[i][j] = 0;
+                newMatrix[j][i] = 0;
                 matrix.push_back(current);
             }
         }
